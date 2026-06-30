@@ -1,0 +1,23 @@
+{
+  "root": [
+    "./src/glbviewer.tsx",
+    "./src/data.ts",
+    "./src/main.tsx",
+    "./src/styles.ts",
+    "./src/types.ts",
+    "./src/utils.ts",
+    "./src/components/categoryfilters.tsx",
+    "./src/components/loadingoverlay.tsx",
+    "./src/components/materiallist.tsx",
+    "./src/components/materialsidebar.tsx",
+    "./src/components/menuselector.tsx",
+    "./src/components/model.tsx",
+    "./src/components/pantotarget.tsx",
+    "./src/components/realsky.tsx",
+    "./src/components/scene.tsx",
+    "./src/components/selectedmaterialfooter.tsx",
+    "./src/components/sidebarheader.tsx",
+    "./src/components/streetassetmeshlist.tsx"
+  ],
+  "version": "5.9.3"
+}
