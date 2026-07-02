@@ -195,55 +195,193 @@ export const GLOBAL_STYLES = `
 
   /* ── Category filters + reset (second row in left pane) ── */
   .ic-categories-row {
+    position: relative;
     display: flex;
     align-items: center;
-    width:auto
     justify-content: space-between;
-    background: rgba(4, 18, 42, 0.60);
-    gap: 10px;
-    padding: 7px 14px;
-    border-bottom: 1px solid var(--ic-border);
+    width: min(100%, max-content);
+    max-width: calc(100vw - 24px);
+    gap: 12px;
+    padding: 12px 20px;
+    background:
+      linear-gradient(90deg, rgba(5, 18, 36, 0.58), rgba(5, 18, 36, 0.26)),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent);
+    border: 1px solid rgba(122, 190, 255, 0.28);
+    border-left-color: rgba(0, 200, 255, 0.46);
+    box-shadow:
+      0 12px 32px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
     flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .ic-categories-row::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(90deg, rgba(0, 200, 255, 0.055) 1px, transparent 1px),
+      linear-gradient(rgba(0, 200, 255, 0.04) 1px, transparent 1px);
+    background-size: 18px 18px;
+    mask-image: linear-gradient(90deg, black 0%, transparent 86%);
+    pointer-events: none;
+  }
+
+  .ic-categories-row::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: 4px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.75), transparent);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .ic-filter-corner {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    border-color: rgba(0, 200, 255, 0.76);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .ic-filter-corner-tl {
+    left: 5px;
+    top: 5px;
+    border-left: 1px solid;
+    border-top: 1px solid;
+  }
+
+  .ic-filter-corner-br {
+    right: 5px;
+    bottom: 5px;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
   }
 
   .ic-categories {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 6px;
   }
 
   .ic-cat-btn {
-    padding: 2px 8px;
+    --cat-color: var(--ic-accent);
+    position: relative;
+    min-width: 55px;
+    height: 30px;
+    padding: 0 13px;
+    border: 1px solid color-mix(in srgb, var(--cat-color) 78%, transparent);
     border-radius: 2px;
-    font-size: 10px;
+    background: rgba(2, 12, 24, 0.22);
+    color: var(--cat-color);
+    font-size: 11px;
     font-family: 'Share Tech Mono', monospace;
-    letter-spacing: 0.5px;
+    letter-spacing: 1.8px;
+    line-height: 1;
     cursor: pointer;
     text-transform: uppercase;
-    transition: all 0.15s;
-    border-width: 1px;
-    border-style: solid;
+    text-shadow: 0 0 10px color-mix(in srgb, var(--cat-color) 65%, transparent);
+    transition:
+      background 0.16s ease,
+      border-color 0.16s ease,
+      box-shadow 0.16s ease,
+      color 0.16s ease,
+      transform 0.16s ease;
+    clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+  }
+
+  .ic-cat-label {
+    position: relative;
+    z-index: 1;
+  }
+
+  .ic-cat-scan {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--cat-color) 16%, transparent), transparent);
+    opacity: 0;
+    transform: translateX(-80%);
+    transition:
+      opacity 0.16s ease,
+      transform 0.24s ease;
+  }
+
+  .ic-cat-btn:hover {
+    background: color-mix(in srgb, var(--cat-color) 10%, rgba(2, 12, 24, 0.16));
+    border-color: var(--cat-color);
+    box-shadow: 0 0 14px color-mix(in srgb, var(--cat-color) 28%, transparent);
+    transform: translateY(-1px);
+  }
+
+  .ic-cat-btn:hover .ic-cat-scan {
+    opacity: 1;
+    transform: translateX(80%);
+  }
+
+  .ic-cat-btn.active {
+    background: color-mix(in srgb, var(--cat-color) 86%, rgba(255, 255, 255, 0.08));
+    border-color: var(--cat-color);
+    color: #06111b;
+    font-weight: 700;
+    text-shadow: none;
+    box-shadow:
+      0 0 16px color-mix(in srgb, var(--cat-color) 48%, transparent),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  }
+
+  .ic-cat-btn.active .ic-cat-scan {
+    opacity: 0.28;
+    transform: translateX(0);
   }
 
   .ic-reset-btn {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     flex-shrink: 0;
-    padding: 4px 10px;
-    border-radius: 3px;
+    height: 30px;
+    padding: 0 11px;
+    border-radius: 2px;
     font-size: 10px;
     font-family: 'Share Tech Mono', monospace;
     cursor: pointer;
-    background: rgba(255, 60, 60, 0.1);
-    border: 1px solid rgba(255, 60, 60, 0.4);
-    color: #ff8888;
-    letter-spacing: 0.5px;
-    transition: all 0.2s;
+    background: rgba(255, 78, 66, 0.08);
+    border: 1px solid rgba(255, 102, 85, 0.52);
+    color: #ff8d7c;
+    letter-spacing: 1.3px;
+    transition:
+      background 0.16s ease,
+      border-color 0.16s ease,
+      box-shadow 0.16s ease;
     white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  .ic-reset-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 16px;
+    padding: 0 5px;
+    background: rgba(255, 102, 85, 0.2);
+    border: 1px solid rgba(255, 102, 85, 0.42);
+    color: #ffe1dc;
   }
 
   .ic-reset-btn:hover {
-    background: rgba(255, 60, 60, 0.2);
-    border-color: #ff4444;
-    box-shadow: 0 0 8px rgba(255, 60, 60, 0.3);
+    background: rgba(255, 78, 66, 0.16);
+    border-color: #ff6655;
+    box-shadow: 0 0 12px rgba(255, 80, 68, 0.24);
   }
 
   /* ── Material list (left pane, fills remaining height, 2-col grid) ── */

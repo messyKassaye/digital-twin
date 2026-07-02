@@ -59,13 +59,34 @@ export const MATERIALS: MaterialInfo[] = [
 ];
 
 export const CATEGORIES = [
-  "all",
-  "building",
-  "road",
-  "street",
-  "vegetation",
-  "vehicle",
-  "decal",
+  {
+    label: "All",
+    value: "all",  
+  },
+  {
+    label: "Power",
+    value: "building",
+  },
+  {
+    label: "Road",
+    value: "road",
+  },
+  {
+    label: "Lights",
+    value: "street",
+  },
+  {
+    label: "Towers",
+    value: "vegetation",
+  },
+  {
+    label: "Vehicle",
+    value: "vehicle",
+  },
+  {
+    label: "Decal",
+    value: "decal",
+  },
 ];
 
 export const CATEGORY_COLORS: Record<string, string> = {
