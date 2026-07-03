@@ -1,4 +1,4 @@
-import { Suspense, useCallback, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -9,9 +9,11 @@ import { cleanName } from "./utils";
 import { StreetMeshEntry } from "./types";
 
 import { LoadingOverlay } from "./components/LoadingOverlay";
-import { MaterialSidebar } from "./components/MaterialSidebar";
 import { Scene } from "./components/Scene";
 import MenuSelector from "./components/MenuSelector";
+import { useSSE } from "./hooks/useSSE";
+import { backend_routes } from "./utils/backend_routes";
+import { API_URL } from "./config/config";
 
 export default function GLBViewer({
   url = "/model/tower_glass_c.glb",
@@ -35,6 +37,7 @@ export default function GLBViewer({
 
   const handleSelect = useCallback(
     (matName: string) => {
+      console.log("Selected material:", matName);
       if (selectedMaterial === matName) {
         setSelectedMaterial(null);
         setPanTarget(null);
@@ -92,7 +95,23 @@ export default function GLBViewer({
   });
 
   const selectedInfo = MATERIALS.find((m) => m.name === selectedMaterial);
+  const { materials, connected } = useSSE(
+    `${API_URL}${backend_routes.eventStream}`,
+  );
 
+  useEffect(() => {
+    if (!materials) return;
+
+    setSelectedMaterial(materials.name || null);
+
+    const timeoutId = setTimeout(() => {
+      handleClearSelection();
+    }, 20000); // clear 20s after selection, i.e. 10s before next SSE emit at 60s
+
+    return () => clearTimeout(timeoutId);
+  }, [materials, connected]);
+
+  console.log("SSE connected:", materials, connected);
   return (
     <div
       style={{
