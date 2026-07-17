@@ -17,19 +17,33 @@ export default function IntelligentCampusDashboard({
   url?: string;
 }) {
   const { time, date } = useClock();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedMaterial, setSelectedMaterial] = useState<string | null>(null);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [panTarget, setPanTarget] = useState<THREE.Vector3 | null>(null);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [meshMap, setMeshMap] = useState<Map<string, THREE.Vector3>>(new Map());
   const [loaded, setLoaded] = useState(false);
-  const [colorOverrides, setColorOverrides] = useState<Record<string, string>>({});
-  const [streetMeshEntries, setStreetMeshEntries] = useState<Map<string, StreetMeshEntry>>(new Map());
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [colorOverrides, setColorOverrides] = useState<Record<string, string>>(
+    {},
+  );
+  const [streetMeshEntries, setStreetMeshEntries] = useState<
+    Map<string, StreetMeshEntry>
+  >(new Map());
   const [selectedMeshUUID, setSelectedMeshUUID] = useState<string | null>(null);
 
   return (
     <div className="relative pointer-events-none w-full min-h-screen bg-[#050b16] text-slate-200 font-sans overflow-hidden">
       {/* 3D scene stays mounted and keeps loading regardless of `loaded` */}
       <div className="fixed inset-0 z-0 pointer-events-auto">
-        <Canvas camera={{ position: [0, 50, 0], fov: 45, near: 0.1, far: 5000 }} shadows>
+        <Canvas
+          camera={{ position: [0, 50, 0], fov: 45, near: 0.1, far: 5000 }}
+          shadows
+        >
           <Suspense fallback={null}>
             <Scene
               url={url}
