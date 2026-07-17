@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import * as THREE from "three";
 
 import { useClock } from "../hooks/useClock";
@@ -17,17 +17,10 @@ export default function IntelligentCampusDashboard({
   url?: string;
 }) {
   const { time, date } = useClock();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedMaterial, setSelectedMaterial] = useState<string | null>(null);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [panTarget, setPanTarget] = useState<THREE.Vector3 | null>(null);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [meshMap, setMeshMap] = useState<Map<string, THREE.Vector3>>(new Map());
   const [loaded, setLoaded] = useState(false);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [colorOverrides, setColorOverrides] = useState<Record<string, string>>(
     {},
   );
@@ -36,6 +29,13 @@ export default function IntelligentCampusDashboard({
   >(new Map());
   const [selectedMeshUUID, setSelectedMeshUUID] = useState<string | null>(null);
 
+  useEffect(() => {
+    setSelectedMeshUUID(null);
+    setColorOverrides({});
+    setPanTarget(null);
+    setSelectedMaterial(null);
+    console.log(streetMeshEntries, meshMap);
+  }, []);
   return (
     <div className="relative pointer-events-none w-full min-h-screen bg-[#050b16] text-slate-200 font-sans overflow-hidden">
       {/* 3D scene stays mounted and keeps loading regardless of `loaded` */}
