@@ -1,61 +1,84 @@
-# GLB Material Inspector
+# Intelligent Campus Dashboard
 
-A React + Three.js (react-three-fiber) viewer for inspecting and recoloring materials on a GLB model, with time-of-day lighting and an interactive sidebar.
+A Huawei-style "Intelligent Campus" digital-twin dashboard: dark navy/cyan HUD UI
+with a live 3D viewport (Three.js) in the center and environment, energy,
+security, and asset panels around it (React, TypeScript, Tailwind CSS, recharts).
 
-## Setup
+## Stack
+
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- `@react-three/fiber` + `@react-three/drei` for the 3D scene (`Scene.tsx`, `OrbitControls`, `Stars`, `Grid`)
+- three.js underneath the fiber layer
+- recharts for the donut / area / radar / line charts
+- lucide-react for icons
+
+## Getting started
 
 ```bash
 npm install
 npm run dev
 ```
 
-Then open the printed local URL (typically http://localhost:5173).
-
-## Adding your model
-
-The viewer expects a `.glb` file to be served from the `public/model/` folder,
-matching the `url` prop passed to `<GLBViewer />` in `src/main.tsx`
-(default: `/model/tower_glass_c.glb`).
-
-Place your file at:
-
-```
-public/model/tower_glass_c.glb
-```
-
-or change the `url` prop in `src/main.tsx` to point at a different path / URL.
-
-Note: the material list in `src/data.ts` (`MATERIALS`) is hard-coded to match
-the names/categories of materials in that specific model. Update it to match
-the material names in your own `.glb` file.
-
-## Build
-
-```bash
-npm run build
-npm run preview
-```
+Then open the printed local URL. `npm run build` type-checks and builds
+a production bundle; `npm run typecheck` runs `tsc --noEmit` only.
 
 ## Project structure
 
 ```
 src/
-  GLBViewer.tsx        — top-level component (state + composition)
-  types.ts             — shared TypeScript types
-  data.ts              — material/category data, HDRI map
-  utils.ts             — cleanName(), getTimeConfig()
-  styles.ts            — global CSS string for the sidebar UI
+  three/
+    Scene.tsx                        # your Scene component — lighting, sky, model, grid, controls
+    Model.tsx                        # ⚠️ placeholder — swap for your real Model.tsx
+    RealSky.tsx                      # ⚠️ placeholder — swap for your real HDRI-based RealSky.tsx
+    PanToTarget.tsx                  # ⚠️ placeholder — swap for your real PanToTarget.tsx
+    utils.ts                         # ⚠️ placeholder — swap for your real getTimeConfig
+    types.ts                         # ⚠️ placeholder — swap for your real StreetMeshEntry type
   components/
-    LoadingOverlay.tsx
-    RealSky.tsx
-    PanToTarget.tsx
-    Model.tsx
-    Scene.tsx
-    SidebarHeader.tsx
-    CategoryFilters.tsx
-    MaterialList.tsx
-    StreetAssetMeshList.tsx
-    SelectedMaterialFooter.tsx
-    MaterialSidebar.tsx
+    IntelligentCampusDashboard.tsx   # main layout — top bar, tabs, 3-column grid, all transparent
+    SceneBackground.tsx              # <Canvas> wrapper mounting Scene as the fixed full-page background
+    hud.tsx                          # shared HUD primitives (Panel, DonutStat, MiniLine, StatRow)
+  hooks/
+    useClock.ts                      # live clock used in the top bar
+  App.tsx
+  main.tsx
+  index.css                          # Tailwind directives
 ```
-"# digital-twin" 
+
+## Swapping in your real Scene dependencies
+
+`Scene.tsx` is used as-is. Everything it imports from `./RealSky`, `./Model`,
+`./PanToTarget`, `./utils`, and `./types` is a **placeholder** built just to
+satisfy `Scene`'s prop contract and get the project compiling/running
+end-to-end. Replace each file with your project's real implementation
+(the actual HDRI sky, material/street-mesh extraction, camera pan easing,
+etc.) — `Scene.tsx` itself shouldn't need any changes.
+
+`SceneBackground.tsx` currently wires `selectedMaterial`, `colorOverrides`,
+`panTarget`, and `selectedMeshUUID` to inert defaults so the scene renders
+standalone as a background. If you bring back the material picker / mesh
+inspector UI, lift that state up into (or above) `SceneBackground` and pass
+it through.
+
+## Swapping in your own 3D model
+
+`SceneBackground` loads a small public sample `.glb` by default so the
+project runs out of the box. Pass your own model instead:
+
+```tsx
+<SceneBackground modelUrl="/models/your-campus.glb" />
+```
+
+Put the file under `public/models/` (create the folder) so Vite serves it
+statically, or point at any reachable HTTPS URL.
+
+## Notes
+
+- Layout targets desktop widths (12-column grid); add responsive breakpoints
+  if you need mobile support.
+- Every card, the top bar, and the tab strip are fully transparent
+  (`bg-transparent`, border only) so the 3D scene reads through the whole
+  page, not just one panel.
+- Chart data in `IntelligentCampusDashboard.tsx` is static sample data — wire
+  it up to your real telemetry/API as needed.
