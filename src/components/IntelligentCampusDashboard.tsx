@@ -1,21 +1,22 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import * as THREE from "three";
 
 import { useClock } from "../hooks/useClock";
 import { Scene } from "./SceneBackground";
 import { Header } from "./dashboard/Header";
-import { LeftColumn } from "./dashboard/LeftColumn";
-import { CenterOverlay } from "./dashboard/CenterOverlay";
-import { RightColumn } from "./dashboard/RightColumn";
 import { LoadingOverlay } from "./LoadingOverlay";
 import { StreetMeshEntry } from "../types";
+import OverView from "./dashboard/tabs/OverView/OverView";
+import dashboardState from "../store/dashboard-state";
+import AIsecurity from "./dashboard/tabs/AIsecurity/AIsecurityDashboard";
 
 export default function IntelligentCampusDashboard({
   url = "/model/tower_glass_c.glb",
 }: {
   url?: string;
 }) {
+  const { selectedTab } = dashboardState();
   const { time, date } = useClock();
   const [selectedMaterial, setSelectedMaterial] = useState<string | null>(null);
   const [panTarget, setPanTarget] = useState<THREE.Vector3 | null>(null);
@@ -29,13 +30,16 @@ export default function IntelligentCampusDashboard({
   >(new Map());
   const [selectedMeshUUID, setSelectedMeshUUID] = useState<string | null>(null);
 
-  useEffect(() => {
-    setSelectedMeshUUID(null);
-    setColorOverrides({});
-    setPanTarget(null);
-    setSelectedMaterial(null);
-    console.log(streetMeshEntries, meshMap);
-  }, []);
+  const renderTab = () => {
+    switch (selectedTab.id) {
+      case 1:
+        return <OverView date={date} />;
+      case 2:
+        return <AIsecurity date={date} />;
+      default:
+        return <OverView date={date} />;
+    }
+  };
   return (
     <div className="relative pointer-events-none w-full min-h-screen bg-[#050b16] text-slate-200 font-sans overflow-hidden">
       {/* 3D scene stays mounted and keeps loading regardless of `loaded` */}
@@ -65,11 +69,7 @@ export default function IntelligentCampusDashboard({
       {loaded && (
         <div className="relative z-10 flex flex-col min-h-screen">
           <Header time={time} />
-          <div className="grid grid-cols-12 gap-3 flex-1 min-h-0">
-            <LeftColumn />
-            <CenterOverlay date={date} />
-            <RightColumn />
-          </div>
+          {renderTab()}
         </div>
       )}
     </div>

@@ -2,25 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   margin: 0;
 }
 
 :root {
-  --ic-bg:        #04091a;
-  --ic-panel:     rgba(4, 18, 42, 0.86);
-  --ic-border:    rgba(0, 200, 255, 0.18);
-  --ic-accent:    #00c8ff;
-  --ic-accent2:   #0066cc;
-  --ic-glow:      rgba(0, 200, 255, 0.35);
-  --ic-text:      #c8e8ff;
-  --ic-muted:     #4a7a9b;
-  --ic-warning:   #ffcc00;
-  --ic-danger:    #ff4444;
-  --ic-success:   #00ff88;
-  --ic-grid-dot:  rgba(0, 200, 255, 0.06);
-  --ic-bar-h:     300px;
+  --ic-bg: #04091a;
+  --ic-panel: rgba(4, 18, 42, 0.86);
+  --ic-border: rgba(0, 200, 255, 0.18);
+  --ic-accent: #00c8ff;
+  --ic-accent2: #0066cc;
+  --ic-glow: rgba(0, 200, 255, 0.35);
+  --ic-text: #c8e8ff;
+  --ic-muted: #4a7a9b;
+  --ic-warning: #ffcc00;
+  --ic-danger: #ff4444;
+  --ic-success: #00ff88;
+  --ic-grid-dot: rgba(0, 200, 255, 0.06);
+  --ic-bar-h: 300px;
 
   /* base tint used by the gradient variants below, kept in sync with .ic-bg */
   --ic-panel-tint: rgba(4, 24, 58, 0.6);
@@ -30,8 +32,7 @@ html, body, #root {
   background: var(--ic-panel-tint);
   color: var(--ic-muted);
   font-size: 11px;
-  font-family: 'Share Tech Mono', monospace;
-  pointer-events: none;
+  font-family: "Share Tech Mono", monospace;
   letter-spacing: 0.5px;
   white-space: nowrap;
   box-shadow: 0 0 20px rgba(0, 200, 255, 0.08);
