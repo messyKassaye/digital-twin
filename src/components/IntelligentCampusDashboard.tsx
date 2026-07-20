@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import * as THREE from "three";
 
 import { useClock } from "../hooks/useClock";
@@ -9,7 +9,7 @@ import { LoadingOverlay } from "./LoadingOverlay";
 import { StreetMeshEntry } from "../types";
 import OverView from "./dashboard/tabs/OverView/OverView";
 import dashboardState from "../store/dashboard-state";
-import AIsecurity from "./dashboard/tabs/AIsecurity/AIsecurityDashboard";
+import AIsecurityDashboard from "./dashboard/tabs/AIsecurity/AIsecurityDashboard";
 
 export default function IntelligentCampusDashboard({
   url = "/model/tower_glass_c.glb",
@@ -30,12 +30,19 @@ export default function IntelligentCampusDashboard({
   >(new Map());
   const [selectedMeshUUID, setSelectedMeshUUID] = useState<string | null>(null);
 
+  useEffect(() => {
+    console.log(streetMeshEntries, meshMap);
+    setSelectedMeshUUID(null);
+    setColorOverrides({});
+    setPanTarget(null);
+    setSelectedMaterial(null);
+  }, []);
   const renderTab = () => {
     switch (selectedTab.id) {
       case 1:
         return <OverView date={date} />;
       case 2:
-        return <AIsecurity date={date} />;
+        return <AIsecurityDashboard date={date} />;
       default:
         return <OverView date={date} />;
     }

@@ -7,6 +7,7 @@ const dashboardState = create<TabState>((set) => ({
   selectedTab: tabs[0],
   setSelectedTab: (value: Tab) =>
     set((state) => ({
+      ...state,
       selectedTab: value,
     })),
 }));
