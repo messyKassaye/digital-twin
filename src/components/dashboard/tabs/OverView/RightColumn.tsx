@@ -49,21 +49,13 @@ export function RightColumn() {
         icon={<ShieldAlert size={12} className="text-cyan-300" />}
       >
         <div className="flex items-center justify-between mb-3">
-<<<<<<< HEAD
-          <span className="text-[10px] text-slate-200">
-=======
           <span className="text-[10px] text-slate-400">
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
             Total alarms today{" "}
             <span className="text-slate-600">Unit: pieces</span>
           </span>
           <span className="text-lg font-mono text-rose-300">100</span>
         </div>
-<<<<<<< HEAD
-        <div className="text-[10px] text-slate-100 mb-1">
-=======
         <div className="text-[10px] text-slate-400 mb-1">
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
           Alarm Handling Rate
         </div>
         <div className="flex items-center gap-4">
@@ -77,15 +69,6 @@ export function RightColumn() {
           <div className="flex flex-col gap-2 text-[11px]">
             <div className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-300" />
-<<<<<<< HEAD
-              <span className="text-slate-200">Handled</span>
-              <span className="font-mono text-cyan-200 ml-1">60</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
-              <span className="text-slate-200">Pending</span>
-              <span className="font-mono text-slate-200 ml-1">40</span>
-=======
               <span className="text-slate-400">Handled</span>
               <span className="font-mono text-cyan-200 ml-1">60</span>
             </div>
@@ -93,7 +76,6 @@ export function RightColumn() {
               <span className="h-1.5 w-1.5 rounded-full bg-slate-600" />
               <span className="text-slate-400">Pending</span>
               <span className="font-mono text-slate-300 ml-1">40</span>
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
             </div>
           </div>
         </div>

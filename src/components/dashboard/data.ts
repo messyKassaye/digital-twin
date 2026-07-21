@@ -1,9 +1,6 @@
 import { COLORS } from "../../lib/theme";
 import type { DonutDatum, SeriesPoint } from "../hud";
-<<<<<<< HEAD
 import { MaterialInfo } from "../model/material-info.model";
-=======
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
 import { Tab } from "../model/tab.model";
 
 export const CYAN = "#22d3ee";
@@ -80,7 +77,6 @@ export const tabs: Tab[] = [
     id: 2,
     name: "AI Security",
   },
-<<<<<<< HEAD
   // {
   //   id: 3,
   //   name: "AI Energy Mgmt",
@@ -89,16 +85,6 @@ export const tabs: Tab[] = [
   //   id: 4,
   //   name: "Conference Room",
   // },
-=======
-  {
-    id: 3,
-    name: "AI Energy Mgmt",
-  },
-  {
-    id: 4,
-    name: "Conference Room",
-  },
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
 ] as const;
 
 import type {
@@ -167,7 +153,6 @@ export const radarAxes: string[] = [
 ];
 
 export const radarValues: number[] = [0.9, 0.55, 0.7, 0.35, 0.6, 0.8];
-<<<<<<< HEAD
 
 export const MATERIALS: MaterialInfo[] = [
   {
@@ -241,5 +226,3 @@ export const MATERIALS: MaterialInfo[] = [
     category: "building",
   },
 ];
-=======
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33

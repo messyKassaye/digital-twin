@@ -1,5 +1,4 @@
 import { Cloud } from "lucide-react";
-<<<<<<< HEAD
 import { MATERIALS, tabs } from "./data";
 import dashboardState from "../../store/dashboard-state";
 import { ChangeEvent } from "react";
@@ -14,16 +13,6 @@ export function Header({ onSelect, time }: Props) {
   return (
     <>
       <div className="pointer-events-none relative ic-bg flex items-center justify-between px-10 py-2.5 bg-transparent border-b border-cyan-400/20 [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]">
-=======
-import { tabs } from "./data";
-import dashboardState from "../../store/dashboard-state";
-
-export function Header({ time }: { time: string }) {
-  const { selectedTab, setSelectedTab } = dashboardState();
-  return (
-    <>
-      <div className="pointer-events-none relative ic-bg flex items-center justify-between px-5 py-2.5 bg-transparent border-b border-cyan-400/20 [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]">
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
         <div className="flex items-center gap-2 text-[13px] font-semibold tracking-wide text-slate-100">
           <span className="text-rose-400">◆</span> DIGITAL HAIL
         </div>
@@ -43,7 +32,6 @@ export function Header({ time }: { time: string }) {
         </div>
       </div>
 
-<<<<<<< HEAD
       <div className="flex ic-bg items-center justify-between gap-1 bg-transparent border-b border-cyan-400/20 text-[11px] [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]">
         <span></span>
         <div className="flex items-center justify-center gap-1">
@@ -100,22 +88,6 @@ export function Header({ time }: { time: string }) {
             />
           </svg>
         </div>
-=======
-      <div className="flex ic-bg items-center justify-center gap-1 bg-transparent border-b border-cyan-400/20 text-[11px] [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]">
-        {tabs.map((tab, i) => (
-          <button
-            key={tab.id}
-            onClick={() => setSelectedTab(tab)}
-            className={`pointer-events-auto px-5 py-1.5 tracking-wide cursor-pointer border-b-2 -mb-px ${
-              selectedTab.id - 1 === i
-                ? "border-cyan-400 text-cyan-200"
-                : "border-transparent text-slate-300 hover:text-cyan-200"
-            }`}
-          >
-            {tab.name}
-          </button>
-        ))}
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
       </div>
     </>
   );

@@ -25,13 +25,8 @@ export function LeftColumn() {
             unit="°C"
           />
           <div>
-<<<<<<< HEAD
             <div className="text-[10px] text-slate-200">
               PM2.5 <span className="text-slate-300">Unit:ug/m3</span>
-=======
-            <div className="text-[10px] text-slate-400">
-              PM2.5 <span className="text-slate-600">Unit:ug/m3</span>
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
             </div>
             <div className="text-lg font-mono text-slate-100">15</div>
           </div>
@@ -42,27 +37,16 @@ export function LeftColumn() {
             unit="%"
           />
           <div>
-<<<<<<< HEAD
             <div className="text-[10px] text-slate-200">
               Noise <span className="text-slate-300">Unit:dp</span>
-=======
-            <div className="text-[10px] text-slate-400">
-              Noise <span className="text-slate-600">Unit:dp</span>
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
             </div>
             <div className="text-lg font-mono text-slate-100">30</div>
           </div>
           <div className="col-span-2 flex items-center gap-2">
-            <Wind size={16} className="text-cyan-300" />
-<<<<<<< HEAD
+            <Wind size={16} className="text-cyan-200" />
             <span className="text-[10px] text-slate-300">Wind speed</span>
             <span className="text-lg font-mono text-slate-100">3</span>
             <span className="text-[9px] text-slate-300">Force</span>
-=======
-            <span className="text-[10px] text-slate-400">Wind speed</span>
-            <span className="text-lg font-mono text-slate-100">3</span>
-            <span className="text-[9px] text-slate-500">Force</span>
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
           </div>
         </div>
       </Panel>
@@ -81,20 +65,12 @@ export function LeftColumn() {
           />
           <div className="flex flex-col gap-2 text-[11px]">
             <div>
-<<<<<<< HEAD
               <span className="text-slate-200">In use</span>{" "}
               <span className="font-mono text-cyan-200 ml-2">521</span>
             </div>
             <div>
               <span className="text-slate-200">Idle</span>{" "}
-=======
-              <span className="text-slate-400">In use</span>{" "}
-              <span className="font-mono text-cyan-200 ml-2">521</span>
-            </div>
-            <div>
-              <span className="text-slate-400">Idle</span>{" "}
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
-              <span className="font-mono text-slate-300 ml-2">52</span>
+              <span className="font-mono text-slate-200 ml-2">52</span>
             </div>
           </div>
         </div>
@@ -121,11 +97,7 @@ export function LeftColumn() {
               ] as [string, string, string, string][]
             ).map(([l, p, n, c]) => (
               <div key={l} className="flex items-center justify-between">
-<<<<<<< HEAD
                 <span className="flex items-center gap-1.5 text-slate-200">
-=======
-                <span className="flex items-center gap-1.5 text-slate-400">
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
                   <span
                     className="h-1.5 w-1.5 rounded-full"
                     style={{ background: c }}
@@ -133,11 +105,7 @@ export function LeftColumn() {
                   {l}
                 </span>
                 <span className="font-mono text-slate-200">{p}</span>
-<<<<<<< HEAD
                 <span className="font-mono text-slate-100">{n}</span>
-=======
-                <span className="font-mono text-slate-500">{n}</span>
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
               </div>
             ))}
           </div>
@@ -150,13 +118,8 @@ export function LeftColumn() {
         className="flex-1 min-h-0 overflow-y-auto"
       >
         <div className="flex items-center justify-between mb-1">
-<<<<<<< HEAD
           <span className="text-[10px] text-slate-200">
             Water <span className="text-slate-300">Unit: km3</span>
-=======
-          <span className="text-[10px] text-slate-400">
-            Water <span className="text-slate-600">Unit: km3</span>
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
           </span>
           <span className="text-[10px] font-mono text-cyan-200">
             Consumption 155.5
@@ -164,13 +127,8 @@ export function LeftColumn() {
         </div>
         <MiniLine data={waterData} color={CYAN} />
         <div className="flex items-center justify-between mb-1 mt-2">
-<<<<<<< HEAD
           <span className="text-[10px] text-slate-200">
-            Electricity <span className="text-slate-200">Unit: wKwh</span>
-=======
-          <span className="text-[10px] text-slate-400">
-            Electricity <span className="text-slate-600">Unit: wKwh</span>
->>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
+            Electricity <span className="text-slate-300">Unit: wKwh</span>
           </span>
           <span className="text-[10px] font-mono text-amber-200">
             Consumption 5.0
