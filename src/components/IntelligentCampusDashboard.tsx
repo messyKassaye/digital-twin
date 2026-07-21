@@ -1,5 +1,9 @@
 import { Canvas } from "@react-three/fiber";
+<<<<<<< HEAD
 import { Suspense, useCallback, useEffect, useState } from "react";
+=======
+import { Suspense, useEffect, useState } from "react";
+>>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
 import * as THREE from "three";
 
 import { useClock } from "../hooks/useClock";
@@ -37,6 +41,7 @@ export default function IntelligentCampusDashboard({
     setPanTarget(null);
     setSelectedMaterial(null);
   }, []);
+<<<<<<< HEAD
 
   const handleSelect = useCallback(
     (matName: string, hex: string) => {
@@ -55,6 +60,8 @@ export default function IntelligentCampusDashboard({
     [selectedMaterial, meshMap],
   );
 
+=======
+>>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
   const renderTab = () => {
     switch (selectedTab.id) {
       case 1:
@@ -93,7 +100,11 @@ export default function IntelligentCampusDashboard({
       <LoadingOverlay visible={!loaded} />
       {loaded && (
         <div className="relative z-10 flex flex-col min-h-screen">
+<<<<<<< HEAD
           <Header time={time} onSelect={handleSelect} />
+=======
+          <Header time={time} />
+>>>>>>> 8d5beecc8f4fd7a6cb3219486180d55eafe69e33
           {renderTab()}
         </div>
       )}
