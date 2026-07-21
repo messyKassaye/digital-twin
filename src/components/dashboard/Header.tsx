@@ -4,7 +4,7 @@ import dashboardState from "../../store/dashboard-state";
 import { ChangeEvent } from "react";
 
 type Props = {
-  onSelect: (matName: string, color: string) => void;
+  onSelect: (matName: string, color?: string) => void;
   time: string;
 };
 export function Header({ onSelect, time }: Props) {

@@ -39,7 +39,7 @@ export default function IntelligentCampusDashboard({
   }, []);
 
   const handleSelect = useCallback(
-    (matName: string, hex: string) => {
+    (matName: string, hex?: string) => {
       if (selectedMaterial === matName) {
         setSelectedMaterial(null);
         setPanTarget(null);
@@ -50,7 +50,7 @@ export default function IntelligentCampusDashboard({
       const center = meshMap.get(matName);
       if (center) setPanTarget(center.clone());
       if (matName !== "Street_Assets") setSelectedMeshUUID(null);
-      setColorOverrides((prev) => ({ ...prev, [matName]: hex }));
+      if (hex) setColorOverrides((prev) => ({ ...prev, [matName]: hex }));
     },
     [selectedMaterial, meshMap],
   );
