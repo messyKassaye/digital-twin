@@ -1,14 +1,39 @@
-import { Cloud } from "lucide-react";
+import { Cloud, UploadCloud } from "lucide-react";
 import { MATERIALS, tabs } from "./data";
 import dashboardState from "../../store/dashboard-state";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 
 type Props = {
   onSelect: (matName: string, color?: string) => void;
   time: string;
+  onUpload?: (file: File) => void;
 };
-export function Header({ onSelect, time }: Props) {
+export function Header({ onSelect, time, onUpload }: Props) {
   const { selectedTab, setSelectedTab } = dashboardState();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // allow re-selecting the same file later
+
+    if (!file) return;
+
+    const isGlb =
+      file.name.toLowerCase().endsWith(".glb") ||
+      file.type === "model/gltf-binary";
+
+    if (!isGlb) {
+      setUploadError("Only .glb files are supported");
+      setUploadedFile(null);
+      return;
+    }
+
+    setUploadError(null);
+    setUploadedFile(file);
+    onUpload?.(file);
+  };
 
   return (
     <>
@@ -51,7 +76,32 @@ export function Header({ onSelect, time }: Props) {
             </button>
           ))}
         </div>
-        <div className="relative pointer-events-auto mr-8">
+        <div className="relative pointer-events-auto mr-8 flex gap-3 items-center justify-center">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".glb,model/gltf-binary"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+          <button
+            className="flex items-center justify-center gap-1 bg-slate-900/80 px-2 py-1 rounded text-[11px] text-cyan-100 border border-cyan-400/30 hover:border-cyan-400/60 focus:outline-none focus:ring-1 focus:ring-cyan-400/60 transition-colors"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <UploadCloud size={16} />
+            Upload GLB file
+          </button>
+
+          {uploadedFile && (
+            <span
+              className="text-cyan-200 font-mono max-w-[160px] truncate"
+              title={uploadedFile.name}
+            >
+              {uploadedFile.name}
+            </span>
+          )}
+          {uploadError && <span className="text-rose-400">{uploadError}</span>}
+
           <select
             onChange={(e: ChangeEvent<HTMLSelectElement>) => {
               const material = MATERIALS.find((m) => m.name === e.target.value);

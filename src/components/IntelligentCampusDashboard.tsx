@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 import { useClock } from "../hooks/useClock";
@@ -11,12 +11,8 @@ import OverView from "./dashboard/tabs/OverView/OverView";
 import dashboardState from "../store/dashboard-state";
 import AIsecurityDashboard from "./dashboard/tabs/AIsecurity/AIsecurityDashboard";
 
-export default function IntelligentCampusDashboard({
-  url = "/model/tower_glass_c.glb",
-}: {
-  url?: string;
-}) {
-  const { selectedTab } = dashboardState();
+export default function IntelligentCampusDashboard() {
+  const { selectedTab, glbUrl, setGlbUrl } = dashboardState();
   const { time, date } = useClock();
   const [selectedMaterial, setSelectedMaterial] = useState<string | null>(null);
   const [panTarget, setPanTarget] = useState<THREE.Vector3 | null>(null);
@@ -30,6 +26,9 @@ export default function IntelligentCampusDashboard({
   >(new Map());
   const [selectedMeshUUID, setSelectedMeshUUID] = useState<string | null>(null);
 
+  // track the blob URL we created so we can revoke it when it's replaced
+  const objectUrlRef = useRef<string | null>(null);
+
   useEffect(() => {
     console.log(streetMeshEntries, meshMap);
     setSelectedMeshUUID(null);
@@ -37,6 +36,27 @@ export default function IntelligentCampusDashboard({
     setPanTarget(null);
     setSelectedMaterial(null);
   }, []);
+
+  // revoke the last blob URL on unmount to avoid leaking memory
+  useEffect(() => {
+    return () => {
+      if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
+    };
+  }, []);
+
+  const handleUpload = useCallback(
+    (file: File) => {
+      // free the previous blob URL, if any, before creating a new one
+      if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
+
+      const newUrl = URL.createObjectURL(file);
+      objectUrlRef.current = newUrl;
+
+      setLoaded(false); // show the loading overlay while the new model loads
+      setGlbUrl?.(newUrl);
+    },
+    [setGlbUrl],
+  );
 
   const handleSelect = useCallback(
     (matName: string, hex?: string) => {
@@ -75,7 +95,7 @@ export default function IntelligentCampusDashboard({
         >
           <Suspense fallback={null}>
             <Scene
-              url={url}
+              url={glbUrl ?? "/model/tower_glass_c.glb"}
               selectedMaterial={selectedMaterial}
               colorOverrides={colorOverrides}
               onMeshMap={setMeshMap}
@@ -93,7 +113,7 @@ export default function IntelligentCampusDashboard({
       <LoadingOverlay visible={!loaded} />
       {loaded && (
         <div className="relative z-10 flex flex-col min-h-screen">
-          <Header time={time} onSelect={handleSelect} />
+          <Header time={time} onSelect={handleSelect} onUpload={handleUpload} />
           {renderTab()}
         </div>
       )}

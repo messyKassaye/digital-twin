@@ -77,14 +77,6 @@ export const tabs: Tab[] = [
     id: 2,
     name: "AI Security",
   },
-  // {
-  //   id: 3,
-  //   name: "AI Energy Mgmt",
-  // },
-  // {
-  //   id: 4,
-  //   name: "Conference Room",
-  // },
 ] as const;
 
 import type {

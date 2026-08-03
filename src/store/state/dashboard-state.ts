@@ -1,6 +1,8 @@
 import { Tab } from "../../components/model/tab.model";
 
-export interface TabState {
+export interface DashboardState {
   selectedTab: Tab;
+  glbUrl?: string;
   setSelectedTab: (tab: Tab) => void;
+  setGlbUrl?: (url: string) => void;
 }
