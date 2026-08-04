@@ -28,7 +28,7 @@ export function Scene({
   onStreetMeshesReady: (registry: Map<string, StreetMeshEntry>) => void;
   selectedMeshUUID: string | null;
 }) {
-const gridRef = useRef<THREE.Mesh>(null);
+  const gridRef = useRef<THREE.Mesh>(null);
   const controlsRef = useRef<OrbitControlsImpl>(null);
   const { camera } = useThree();
   const config = useMemo(() => getTimeConfig(), []);
