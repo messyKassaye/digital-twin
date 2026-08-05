@@ -10,6 +10,9 @@ import { StreetMeshEntry } from "../types";
 import OverView from "./dashboard/tabs/OverView/OverView";
 import dashboardState from "../store/dashboard-state";
 import AIsecurityDashboard from "./dashboard/tabs/AIsecurity/AIsecurityDashboard";
+import { useDangerEvents } from "../hooks/useDangerEvents";
+import { DangerAlertOverlay } from "./DangerAlertOverlay";
+import { API_URL } from "../config/dot-env-config";
 
 export default function IntelligentCampusDashboard() {
   const { selectedTab, glbUrl, setGlbUrl } = dashboardState();
@@ -28,7 +31,7 @@ export default function IntelligentCampusDashboard() {
 
   // track the blob URL we created so we can revoke it when it's replaced
   const objectUrlRef = useRef<string | null>(null);
-
+  useDangerEvents("http://localhost:5000/events/stream", loaded);
   useEffect(() => {
     console.log(streetMeshEntries, meshMap);
     setSelectedMeshUUID(null);
@@ -117,6 +120,7 @@ export default function IntelligentCampusDashboard() {
           {renderTab()}
         </div>
       )}
+      <DangerAlertOverlay onNavigate={handleSelect} />
     </div>
   );
 }

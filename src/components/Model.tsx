@@ -3,6 +3,20 @@ import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { StreetMeshEntry } from "../types";
 import useMaterialStore from "../store/useMaterialStore";
+import useDangerEventStore from "../store/danger-event-store";
+import { DangerSeverity } from "../store/state/danger-event-state";
+
+const SEVERITY_COLORS: Record<DangerSeverity, string> = {
+  critical: "#ff2222",
+  warning: "#ffaa00",
+  info: "#00c8ff",
+};
+
+const SEVERITY_RANK: Record<DangerSeverity, number> = {
+  info: 0,
+  warning: 1,
+  critical: 2,
+};
 
 export function Model({
   url,
@@ -32,6 +46,8 @@ export function Model({
     > | null,
   );
   const { setMaterials } = useMaterialStore();
+  const dangerEvents = useDangerEventStore((s) => s.events);
+
   useEffect(() => {
     const box = new THREE.Box3().setFromObject(scene);
     onLoad(box);
@@ -104,6 +120,16 @@ export function Model({
   }, [extractedMaterial, setMaterials]);
 
   useEffect(() => {
+    // highest-severity active danger event per material, so if a material
+    // has both a "warning" and a "critical" event, critical wins the glow
+    const dangerByMaterial = new Map<string, DangerSeverity>();
+    dangerEvents.forEach((e) => {
+      const current = dangerByMaterial.get(e.materialName);
+      if (!current || SEVERITY_RANK[e.severity] > SEVERITY_RANK[current]) {
+        dangerByMaterial.set(e.materialName, e.severity);
+      }
+    });
+
     scene.traverse((obj) => {
       if (!(obj instanceof THREE.Mesh)) return;
       const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
@@ -114,9 +140,16 @@ export function Model({
           const orig = originalColors.current.get(mat.name);
           if (orig) mat.color.copy(orig);
         }
+
+        const danger = dangerByMaterial.get(mat.name);
         if (selectedMaterial && mat.name === selectedMaterial) {
+          // manual selection always wins over a danger glow, so you can
+          // still inspect a flagged material without losing the highlight
           mat.emissive.set("#00c8ff");
           mat.emissiveIntensity = 0.5;
+        } else if (danger) {
+          mat.emissive.set(SEVERITY_COLORS[danger]);
+          mat.emissiveIntensity = danger === "critical" ? 0.9 : 0.5;
         } else {
           const origE = originalEmissives.current.get(mat.name);
           mat.emissive.copy(origE ?? new THREE.Color(0, 0, 0));
@@ -125,7 +158,7 @@ export function Model({
         mat.needsUpdate = true;
       });
     });
-  }, [scene, selectedMaterial, colorOverrides]);
+  }, [scene, selectedMaterial, colorOverrides, dangerEvents]);
 
   useEffect(() => {
     streetMeshRegistry.current.forEach(({ mesh, originalMat }, uuid) => {
