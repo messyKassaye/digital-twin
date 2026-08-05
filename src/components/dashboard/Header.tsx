@@ -1,7 +1,8 @@
 import { Cloud, UploadCloud } from "lucide-react";
-import { MATERIALS, tabs } from "./data";
+import { tabs } from "./data";
 import dashboardState from "../../store/dashboard-state";
 import { ChangeEvent, useRef, useState } from "react";
+import useMaterialStore from "../../store/useMaterialStore";
 
 type Props = {
   onSelect: (matName: string, color?: string) => void;
@@ -10,13 +11,14 @@ type Props = {
 };
 export function Header({ onSelect, time, onUpload }: Props) {
   const { selectedTab, setSelectedTab } = dashboardState();
+  const materials = useMaterialStore((s) => s.materials);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    e.target.value = ""; // allow re-selecting the same file later
+    e.target.value = "";
 
     if (!file) return;
 
@@ -101,25 +103,30 @@ export function Header({ onSelect, time, onUpload }: Props) {
             </span>
           )}
           {uploadError && <span className="text-rose-400">{uploadError}</span>}
-
+          <span className="text-slate-400">|</span>
+          <span className="text-slate-400">Filter by material:</span>
           <select
             onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-              const material = MATERIALS.find((m) => m.name === e.target.value);
+              const material = materials.find((m) => m.name === e.target.value);
               if (material) onSelect(material.name, material.color);
             }}
-            defaultValue={"all"}
+            defaultValue=""
+            disabled={materials.length === 0}
             className="appearance-none bg-slate-900/80 border border-cyan-400/30 text-cyan-100 text-[11px]
                rounded px-3 py-1 pr-6 tracking-wide cursor-pointer
                hover:border-cyan-400/60 focus:outline-none focus:ring-1 focus:ring-cyan-400/60
-               transition-colors"
+               transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            {MATERIALS.map((material) => (
+            <option value="" disabled className="bg-slate-900 text-slate-400">
+              {materials.length === 0 ? "No materials yet" : "Select material"}
+            </option>
+            {materials.map((material) => (
               <option
                 className="bg-slate-900 text-slate-100"
                 value={material.name}
-                key={material.index}
+                key={material.name}
               >
-                {material.label}
+                {material.name} ({material.meshCount})
               </option>
             ))}
           </select>

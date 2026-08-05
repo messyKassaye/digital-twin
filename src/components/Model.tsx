@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { StreetMeshEntry } from "../types";
+import useMaterialStore from "../store/useMaterialStore";
 
 export function Model({
   url,
@@ -30,7 +31,7 @@ export function Model({
       { material: THREE.MeshStandardMaterial; meshCount: number }
     > | null,
   );
-
+  const { setMaterials } = useMaterialStore();
   useEffect(() => {
     const box = new THREE.Box3().setFromObject(scene);
     onLoad(box);
@@ -91,10 +92,16 @@ export function Model({
 
   useEffect(() => {
     if (!extractedMaterial) return;
-    console.log("Model render", {
-      extractedMaterial,
-    });
-  }, [extractedMaterial]);
+    setMaterials(
+      Array.from(extractedMaterial.entries()).map(
+        ([name, { material, meshCount }]) => ({
+          name,
+          color: `#${material.color.getHexString()}`,
+          meshCount,
+        }),
+      ),
+    );
+  }, [extractedMaterial, setMaterials]);
 
   useEffect(() => {
     scene.traverse((obj) => {
