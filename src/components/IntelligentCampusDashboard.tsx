@@ -13,6 +13,7 @@ import AIsecurityDashboard from "./dashboard/tabs/AIsecurity/AIsecurityDashboard
 import { useDangerEvents } from "../hooks/useDangerEvents";
 import { DangerAlertOverlay } from "./DangerAlertOverlay";
 import { API_URL } from "../config/dot-env-config";
+import { useSirenAlarm } from "../hooks/useSirenAlarm";
 
 export default function IntelligentCampusDashboard() {
   const { selectedTab, glbUrl, setGlbUrl } = dashboardState();
@@ -28,10 +29,14 @@ export default function IntelligentCampusDashboard() {
     Map<string, StreetMeshEntry>
   >(new Map());
   const [selectedMeshUUID, setSelectedMeshUUID] = useState<string | null>(null);
+  const [muted, setMuted] = useState(false);
 
   // track the blob URL we created so we can revoke it when it's replaced
   const objectUrlRef = useRef<string | null>(null);
-  useDangerEvents("http://localhost:5000/events/stream", loaded);
+  useDangerEvents(`${API_URL}/events/stream`, loaded);
+
+  const { unlocked, unlockAudio } = useSirenAlarm(muted);
+
   useEffect(() => {
     console.log(streetMeshEntries, meshMap);
     setSelectedMeshUUID(null);
@@ -121,6 +126,22 @@ export default function IntelligentCampusDashboard() {
         </div>
       )}
       <DangerAlertOverlay onNavigate={handleSelect} />
+      {/* Audio unlock / mute control — browsers block autoplay until a click happens */}
+      {!unlocked ? (
+        <button
+          onClick={unlockAudio}
+          className="pointer-events-auto fixed bottom-4 right-4 z-50 bg-slate-900/90 border border-cyan-400/40 text-cyan-100 text-xs px-3 py-2 rounded-lg hover:border-cyan-400/70 transition-colors"
+        >
+          🔊 Enable alert sounds
+        </button>
+      ) : (
+        <button
+          onClick={() => setMuted((m) => !m)}
+          className="pointer-events-auto fixed bottom-4 right-4 z-50 bg-slate-900/90 border border-cyan-400/40 text-cyan-100 text-xs px-3 py-2 rounded-lg hover:border-cyan-400/70 transition-colors"
+        >
+          {muted ? "🔇 Unmute alerts" : "🔊 Mute alerts"}
+        </button>
+      )}
     </div>
   );
 }
