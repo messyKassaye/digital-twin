@@ -1,5 +1,10 @@
+import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
 import IntelligentCampusDashboard from "./components/IntelligentCampusDashboard";
 
 export default function App() {
-  return <IntelligentCampusDashboard />;
+  return (
+    <ErrorBoundary>
+      <IntelligentCampusDashboard />
+    </ErrorBoundary>
+  );
 }
