@@ -1,4 +1,4 @@
-import { ExtractedMaterial } from "../../components/model/extracted-material.model";
+import { ExtractedMaterial } from "../../model/extracted-material.model";
 
 export type MaterialState = {
   materials: ExtractedMaterial[];

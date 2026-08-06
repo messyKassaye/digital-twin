@@ -14,6 +14,7 @@ import { useDangerEvents } from "../hooks/useDangerEvents";
 import { DangerAlertOverlay } from "./DangerAlertOverlay";
 import { API_URL } from "../config/dot-env-config";
 import { useSirenAlarm } from "../hooks/useSirenAlarm";
+import { usePersonEvents } from "../hooks/usePersonEvents";
 
 export default function IntelligentCampusDashboard() {
   const { selectedTab, glbUrl, setGlbUrl } = dashboardState();
@@ -34,6 +35,7 @@ export default function IntelligentCampusDashboard() {
   // track the blob URL we created so we can revoke it when it's replaced
   const objectUrlRef = useRef<string | null>(null);
   useDangerEvents(`${API_URL}/events/stream/danger`, loaded);
+  usePersonEvents(`${API_URL}/persons-event/stream/person`, loaded);
 
   const { unlocked, unlockAudio } = useSirenAlarm(muted);
 

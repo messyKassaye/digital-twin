@@ -1,7 +1,7 @@
 import { COLORS } from "../../lib/theme";
 import type { DonutDatum, SeriesPoint } from "../hud";
-import { MaterialInfo } from "../model/material-info.model";
-import { Tab } from "../model/tab.model";
+import { MaterialInfo } from "../../model/material-info.model";
+import { Tab } from "../../model/tab.model";
 
 export const CYAN = "#22d3ee";
 export const BLUE = "#3b82f6";
@@ -63,7 +63,6 @@ export const usageDonut: DonutDatum[] = [{ value: 91 }, { value: 9 }];
 export const alarmDonut: DonutDatum[] = [{ value: 60 }, { value: 40 }];
 
 export const topStats: [string, string][] = [
-  ["Personnel Number", "20,060"],
   ["Vehicles on campus", "12,236"],
   ["Available Parking", "64 / 12300"],
 ];

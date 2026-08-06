@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { tabs } from "../components/dashboard/data";
-import { Tab } from "../components/model/tab.model";
+import { Tab } from "../model/tab.model";
 import { DashboardState } from "./state/dashboard-state";
 
 const useDashboardStore = create<DashboardState>((set) => ({

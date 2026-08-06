@@ -1,4 +1,4 @@
-import { Tab } from "../../components/model/tab.model";
+import { Tab } from "../../model/tab.model";
 
 export interface DashboardState {
   selectedTab: Tab;
