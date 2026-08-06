@@ -1,6 +1,6 @@
 import { Cloud, UploadCloud } from "lucide-react";
 import { tabs } from "./data";
-import dashboardState from "../../store/dashboard-state";
+import dashboardState from "../../store/useDashboardStore";
 import { ChangeEvent, useRef, useState } from "react";
 import useMaterialStore from "../../store/useMaterialStore";
 

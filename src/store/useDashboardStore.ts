@@ -3,7 +3,7 @@ import { tabs } from "../components/dashboard/data";
 import { Tab } from "../components/model/tab.model";
 import { DashboardState } from "./state/dashboard-state";
 
-const dashboardState = create<DashboardState>((set) => ({
+const useDashboardStore = create<DashboardState>((set) => ({
   selectedTab: tabs[0],
   glbUrl: "/model/tower_glass_c.glb",
   setSelectedTab: (value: Tab) =>
@@ -18,4 +18,4 @@ const dashboardState = create<DashboardState>((set) => ({
     })),
 }));
 
-export default dashboardState;
+export default useDashboardStore;

@@ -8,7 +8,7 @@ import { Header } from "./dashboard/Header";
 import { LoadingOverlay } from "./LoadingOverlay";
 import { StreetMeshEntry } from "../types";
 import OverView from "./dashboard/tabs/OverView/OverView";
-import dashboardState from "../store/dashboard-state";
+import dashboardState from "../store/useDashboardStore";
 import AIsecurityDashboard from "./dashboard/tabs/AIsecurity/AIsecurityDashboard";
 import { useDangerEvents } from "../hooks/useDangerEvents";
 import { DangerAlertOverlay } from "./DangerAlertOverlay";
@@ -33,7 +33,7 @@ export default function IntelligentCampusDashboard() {
 
   // track the blob URL we created so we can revoke it when it's replaced
   const objectUrlRef = useRef<string | null>(null);
-  useDangerEvents(`${API_URL}/events/stream`, loaded);
+  useDangerEvents(`${API_URL}/events/stream/danger`, loaded);
 
   const { unlocked, unlockAudio } = useSirenAlarm(muted);
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import useDangerEventStore from "../store/danger-event-store";
+import useDangerEventStore from "../store/useDangerEventStore";
 import { DangerSeverity } from "../store/state/danger-event-state";
 
 type RawDangerPayload = {

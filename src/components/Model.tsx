@@ -3,7 +3,7 @@ import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { StreetMeshEntry } from "../types";
 import useMaterialStore from "../store/useMaterialStore";
-import useDangerEventStore from "../store/danger-event-store";
+import useDangerEventStore from "../store/useDangerEventStore";
 import { DangerSeverity } from "../store/state/danger-event-state";
 
 const SEVERITY_COLORS: Record<DangerSeverity, string> = {

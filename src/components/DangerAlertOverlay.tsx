@@ -1,5 +1,5 @@
 import { AlertTriangle, AlertOctagon, Info, X } from "lucide-react";
-import useDangerEventStore from "../store/danger-event-store";
+import useDangerEventStore from "../store/useDangerEventStore";
 import useMaterialStore from "../store/useMaterialStore";
 import { DangerSeverity } from "../store/state/danger-event-state";
 

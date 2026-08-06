@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import useDangerEventStore from "../store/danger-event-store";
+import useDangerEventStore from "../store/useDangerEventStore";
 
 const CRITICAL_FREQ_LOW = 500;
 const CRITICAL_FREQ_HIGH = 900;
